@@ -50,3 +50,6 @@ SubShader{
 	}
 		FallBack "Diffuse"
 }
+/*
+		the gray value of each pixel determain the intensity of the distortion.
+*/
