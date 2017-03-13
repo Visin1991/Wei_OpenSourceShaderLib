@@ -17,9 +17,6 @@ public class PostOutLineEffect : MonoBehaviour {
     public Shader DrawFlatShap;
     Material post_Mat;
 
-    [Range(1,20)]
-    public int NumberOfIterations = 5;
-
     private void Start()
     {
         mainCamera = GetComponent<Camera>();
@@ -30,26 +27,28 @@ public class PostOutLineEffect : MonoBehaviour {
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        post_Mat.SetInt("NumberOfIterations", NumberOfIterations);
-
         tempCam.CopyFrom(mainCamera);
         tempCam.clearFlags = CameraClearFlags.Color;
         tempCam.backgroundColor = Color.black;
 
         //选定特定的 Layer 去Render
-        tempCam.cullingMask = 1 << LayerMask.NameToLayer("Outline");
+        tempCam.cullingMask = 1 << LayerMask.NameToLayer("Outline"); //把需要 增加Outline 的物体的 Layer 设置成 Outline 
         RenderTexture tempRT = new RenderTexture(source.width, source.height, 0, RenderTextureFormat.R8);
+
 
         //把这个texture buffer 储存到 GPU 内存中
         tempRT.Create();
 
         tempCam.targetTexture = tempRT;
 
+        post_Mat.SetTexture("_SceneTex", source);
+
         tempCam.RenderWithShader(DrawFlatShap, "");
 
         Graphics.Blit(tempRT, destination,post_Mat);
 
         tempRT.Release();
+
 
     }
 }
