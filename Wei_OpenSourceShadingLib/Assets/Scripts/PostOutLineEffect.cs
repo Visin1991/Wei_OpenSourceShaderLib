@@ -16,6 +16,7 @@ public class PostOutLineEffect : MonoBehaviour {
     public Shader post_Outline;
     public Shader DrawFlatShap;
     Material post_Mat;
+    RenderTexture tempRT;
 
     private void Start()
     {
@@ -23,6 +24,7 @@ public class PostOutLineEffect : MonoBehaviour {
         tempCam = new GameObject().AddComponent<Camera>();
         tempCam.enabled = false;
         post_Mat = new Material(post_Outline);
+        SetRenderTexture(mainCamera.pixelWidth, mainCamera.pixelHeight);
     }
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -33,14 +35,16 @@ public class PostOutLineEffect : MonoBehaviour {
 
         //选定特定的 Layer 去Render
         tempCam.cullingMask = 1 << LayerMask.NameToLayer("Outline"); //把需要 增加Outline 的物体的 Layer 设置成 Outline 
-        RenderTexture tempRT = new RenderTexture(source.width, source.height, 0, RenderTextureFormat.R8);
 
-
-        //把这个texture buffer 储存到 GPU 内存中
-        tempRT.Create();
+        if (source.width != tempRT.width || source.height != tempRT.height)
+        {
+            SetRenderTexture(source.width, source.height);
+        }
+        
 
         tempCam.targetTexture = tempRT;
 
+        //把主 摄像头 render 的Texture 设为 _SceneTex
         post_Mat.SetTexture("_SceneTex", source);
 
         tempCam.RenderWithShader(DrawFlatShap, "");
@@ -50,5 +54,12 @@ public class PostOutLineEffect : MonoBehaviour {
         tempRT.Release();
 
 
+    }
+
+    void SetRenderTexture(int w, int h)
+    {
+        tempRT = new RenderTexture(w, h, 0, RenderTextureFormat.R8);
+        //把这个texture buffer 储存到 GPU 内存中
+        tempRT.Create();
     }
 }

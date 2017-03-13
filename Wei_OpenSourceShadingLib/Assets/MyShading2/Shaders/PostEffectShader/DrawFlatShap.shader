@@ -1,4 +1,4 @@
-﻿//This shader goes on the objects themselves. It just draws the object as white, and has the "Outline" tag.
+﻿//This shader goes on the objects themselves. It just draws the object as white, and has the "Outline" layer.
 Shader "ShaderLib/PostEffect/DrawFlatShap" {
 	SubShader{
 		ZWrite Off
@@ -15,7 +15,7 @@ Shader "ShaderLib/PostEffect/DrawFlatShap" {
 				float4 pos:SV_POSITION; //顶点位置-->映射到镜头后的位置
 			};
 			
-			//仅仅是吧 顶点位置 转化到 镜头所对应的位置
+			//仅仅是把 顶点位置 转化到 镜头所对应的位置
 			vtf VShader(vtf i)
 			{
 				vtf o;

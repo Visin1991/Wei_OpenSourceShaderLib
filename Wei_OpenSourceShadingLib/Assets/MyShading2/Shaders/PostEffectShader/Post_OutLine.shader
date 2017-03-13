@@ -35,6 +35,10 @@
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 
 				//we need to fix the UVs to match our screen space coordinates. There is a Unity define for this that should normally be used.
+				//Because v.vertex is the texture position based on the low-level graphic screen coordinate (not a model vertex position)
+				//And OpenGL or DirectX the original position(0,0) of the screen is the center
+				//So when a texture across the entire screen. the uv of the texture will become to rightBottom(-1,-1) leftBottom(1,-1) rightTop(1,1) leftTop(-1,1)
+				//So we need to fix the uv coordinate of the texture to match the Unity Screen coordinate rightBottom(0,0) leftBottom(1,0) rightTop(1,1) leftTop(0,1)
 				o.uvs = o.pos.xy / 2 + 0.5;
 
 				return o;
@@ -46,7 +50,7 @@
 				int NumberOfIterations = 20;
 
 				//split texel size into smaller words
-				float TX_x = _MainTex_TexelSize.x;
+				float TX_x = _MainTex_TexelSize.x; //if the texture is 1024 x 1024. then the TX_x will be pxielPos.x / 1024 (has range of [0,1])
 
 				//and a final intensity that increments based on surrounding intensities.
 				float ColorIntensityInRadius;
@@ -61,7 +65,6 @@
 				//output some intensity of teal
 				return ColorIntensityInRadius;
 			}
-
 			ENDCG
 		}//End Pass
 
@@ -97,7 +100,11 @@
 				//Despite the fact that we are only drawing a quad to the screen, Unity requires us to multiply vertices by our MVP matrix, presumably to keep things working when inexperienced people try copying code from other shaders.
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 
-				//Also, we need to fix the UVs to match our screen space coordinates. There is a Unity define for this that should normally be used.
+				//we need to fix the UVs to match our screen space coordinates. There is a Unity define for this that should normally be used.
+				//Because v.vertex is the texture position based on the low-level graphic screen coordinate (not a model vertex position)
+				//And OpenGL or DirectX the original position(0,0) of the screen is the center
+				//So when a texture across the entire screen. the uv of the texture will become to rightBottom(-1,-1) leftBottom(1,-1) rightTop(1,1) leftTop(-1,1)
+				//So we need to fix the uv coordinate of the texture to match the Unity Screen coordinate rightBottom(0,0) leftBottom(1,0) rightTop(1,1) leftTop(0,1)
 				o.uvs = o.pos.xy / 2 + 0.5;
 
 				return o;
