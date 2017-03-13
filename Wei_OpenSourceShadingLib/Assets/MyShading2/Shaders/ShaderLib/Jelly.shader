@@ -26,6 +26,8 @@
 				//v.vertex.x += sign(v.vertex.x) * sin(_Time.w) * _Exturde;
 				//v.vertex.y += sign(v.vertex.y) * cos(_Time.w) * _Exturde;
 				//v.vertex.z += sign(v.vertex.z) * cos(_Time.w) * _Exturde;
+				
+				//Extrude the Vertex before we convert the local pos to MVP space
 				v.vertex.xyz += sin(_Time.w) * v.normal * _Exturde;
 
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
