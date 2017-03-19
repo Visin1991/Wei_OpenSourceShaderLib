@@ -9,13 +9,7 @@ namespace Visin1_1
         [SerializeField] private PlayerInputs playerInputs;
         [SerializeField] private PlayerInfoProcesser playerInfos;
         [SerializeField] private Transform cameraT;
-        public PlayerInputs PlayerInputs
-        {
-            get
-            {
-                return playerInputs;
-            }
-        }
+
         public PlayerInfoProcesser PlayerInfos
         {
             get
@@ -62,10 +56,69 @@ namespace Visin1_1
     [System.Serializable]
     public class PlayerInfoProcesser
     {
-        public float moveSpeed = 5;
-        public float runSpeed = 10;
-        public bool isRuning = false;
-        public bool Puhching = false;
+        [SerializeField] private float speedSmoothTime = 0.1f;
+        [SerializeField] private float moveSpeed = 5;
+        [SerializeField] private float runSpeed = 10;
+        [SerializeField] private bool isRuning = false;
+        [SerializeField] private bool Puhching = false;
+        [SerializeField] private Vector2 axisInput = Vector2.zero;
+        [SerializeField] private float turnSmoothTime = 0.2f;
+
+        public float SpeedSmoothTime
+        {
+            get
+            {
+                return speedSmoothTime;
+            }
+        }
+
+        public float MoveSpeed
+        {
+            get
+            {
+                return moveSpeed;
+            }
+        }
+
+        public float RunSpeed
+        {
+            get
+            {
+                return runSpeed;
+            }
+        }
+
+        public bool IsRuning
+        {
+            get
+            {
+                return isRuning;
+            }
+        }
+
+        public bool Puhching1
+        {
+            get
+            {
+                return Puhching;
+            }
+        }
+
+        public Vector2 AxisInput
+        {
+            get
+            {
+                return axisInput;
+            }
+        }
+
+        public float TurnSmoothTime
+        {
+            get
+            {
+                return turnSmoothTime;
+            }
+        }
 
         /// <summary>
         ///     We will check all key status every frame.
@@ -76,6 +129,7 @@ namespace Visin1_1
         {
             isRuning = inputsInfo.RHold;
             Puhching = inputsInfo.XDown;
+            axisInput = inputsInfo.AxisInput;
         }
     }
 }

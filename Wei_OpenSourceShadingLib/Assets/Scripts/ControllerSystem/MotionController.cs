@@ -5,7 +5,7 @@ using System.Reflection;
 
 /// <summary>
 ///     With the Attributes to Bind to a member function. We can use partial function very eazly...
-///  Add new test or do whatever will not effec the old Script. We can do any test on another partial.
+///  Add new test or do whatever will not effec the old Script. We can do any test on another partial without change the old....
 /// </summary>
 namespace Visin1_1
 {
@@ -23,8 +23,10 @@ namespace Visin1_1
 
         protected Vector3 velocityNor = Vector3.zero;
         protected Vector3 velocity3D = Vector3.zero;
-        protected float postProcessedMoveSpeed = 0.0f;
+        protected float postTargetMoveSpeed = 0.0f;
         protected Vector3 force = Vector3.zero;
+        protected float currentSpeed = 0.0f;
+        private float speedSmoothVelocity;
 
         public Vector3 VelocityNor
         {
@@ -44,7 +46,7 @@ namespace Visin1_1
         {
             get
             {
-                return postProcessedMoveSpeed;
+                return postTargetMoveSpeed;
             }
         }
         public float DefaultYRotation
@@ -76,6 +78,8 @@ namespace Visin1_1
 
         virtual protected void Update()
         {
+            axisInput = player.PlayerInfos.AxisInput;
+
             if (updateDel != null)
             {
                 updateDel();
@@ -86,8 +90,6 @@ namespace Visin1_1
  
         void FacingInputDir()
         {
-            axisInput = player.PlayerInputs.AxisInput;
-
             if (axisInput != Vector2.zero)
             {
                 transform.eulerAngles = Vector3.up * Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg;
@@ -101,8 +103,6 @@ namespace Visin1_1
 
         void FacingInputDir_Stay()
         {
-            axisInput = player.PlayerInputs.AxisInput;
-
             if (axisInput != Vector2.zero)
             {
                 transform.eulerAngles = Vector3.up * Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg;
@@ -111,8 +111,6 @@ namespace Visin1_1
 
         void FacingInputDir_Stay_AlignCameraDir()
         {
-            axisInput = player.PlayerInputs.AxisInput;
-
             if (axisInput != Vector2.zero)
             {
                 transform.eulerAngles = Vector3.up * (Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y);
@@ -122,12 +120,10 @@ namespace Visin1_1
         [BindToUpdate("W key will always make the player facing the forward direction of the Camera...")]
         void FacingInputDir_Stay_AlignCamaraDir_Smooth()
         {
-            axisInput = player.PlayerInputs.AxisInput;
-
             if (axisInput != Vector2.zero)
             {
                 float targetRotation = Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
-                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
+                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(player.PlayerInfos.TurnSmoothTime));
             }
         }
 
@@ -152,14 +148,15 @@ namespace Visin1_1
 
         void PostProcessed_MoveSpeed()
         {
-            postProcessedMoveSpeed = player.PlayerInfos.isRuning ? axisInput.magnitude * player.PlayerInfos.runSpeed : axisInput.magnitude * player.PlayerInfos.moveSpeed;
+            postTargetMoveSpeed = player.PlayerInfos.IsRuning ? axisInput.magnitude * player.PlayerInfos.RunSpeed : axisInput.magnitude * player.PlayerInfos.MoveSpeed;
         }
 
         [BindToUpdate("Post Process the Move speed and Velocity ......")]
         void PostProcessed_MoveSpeed_Velocity()
         {
-            postProcessedMoveSpeed = player.PlayerInfos.isRuning ? axisInput.magnitude * player.PlayerInfos.runSpeed : axisInput.magnitude * player.PlayerInfos.moveSpeed;
-            velocity3D = postProcessedMoveSpeed * velocityNor;
+            postTargetMoveSpeed = (player.PlayerInfos.IsRuning ? player.PlayerInfos.RunSpeed : player.PlayerInfos.MoveSpeed) * axisInput.magnitude ;
+            currentSpeed = Mathf.SmoothDamp(currentSpeed, postTargetMoveSpeed, ref speedSmoothVelocity, player.PlayerInfos.SpeedSmoothTime);
+            velocity3D = currentSpeed * velocityNor;
         }
 
         #endregion
@@ -168,6 +165,8 @@ namespace Visin1_1
         {
             return smoothTime;
         }
+
+        #region Function Delegate
 
         void BindStartDel()
         {
@@ -198,5 +197,29 @@ namespace Visin1_1
                 }
             }
         }
+
+        void AddToUpdateDel(UpdateDel method)
+        {
+            updateDel -= method;
+            updateDel += method;
+        }
+
+        void AddToStartDel(StartDel method)
+        {
+            startDel -= method;
+            startDel += method;
+        }
+
+        void DeleteFromUpdateDel(UpdateDel method)
+        {
+            updateDel -= method;
+        }
+
+        void DeleteFromStartDel(StartDel method)
+        {
+            startDel -= method;
+        }
+
+        #endregion
     }
 }
