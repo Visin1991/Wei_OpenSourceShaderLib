@@ -13,9 +13,9 @@ namespace Visin1_1
         private Vector3 currentRotation;
 
         [SerializeField] private Transform target;
-        [SerializeField] private Vector2 rangeToTarget = new Vector2(2, 20);
+        [SerializeField] private Vector2 rangeToTarget = new Vector2(2, 10);
         [SerializeField] private float cameraMoveSensitivity = 10;
-        private float dstToTarget = 20;
+        private float dstToTarget = 10;
 
         private float yaw;  //Rotation around Y Axis
         private float pitch = 75;//Rotation around X Axis

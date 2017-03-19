@@ -12,7 +12,6 @@ namespace Visin1_1
     [RequireComponent(typeof(Player))]
     public partial class MotionController : MonoBehaviour
     {
-        public float turnSmoothTime = 0.2f;     //the bigger the slower
         private float turnSmoothVelocity;
 
         protected Player player;
@@ -92,11 +91,11 @@ namespace Visin1_1
         {
             if (axisInput != Vector2.zero)
             {
-                transform.eulerAngles = Vector3.up * Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg;
+                player.CharacterTF.eulerAngles = Vector3.up * Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg;
             }
             else
             {
-                transform.eulerAngles = Vector3.up * defaultYRotation;
+                player.CharacterTF.eulerAngles = Vector3.up * defaultYRotation;
             }
 
         }
@@ -105,7 +104,7 @@ namespace Visin1_1
         {
             if (axisInput != Vector2.zero)
             {
-                transform.eulerAngles = Vector3.up * Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg;
+                player.CharacterTF.eulerAngles = Vector3.up * Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg;
             }
         }
 
@@ -113,7 +112,7 @@ namespace Visin1_1
         {
             if (axisInput != Vector2.zero)
             {
-                transform.eulerAngles = Vector3.up * (Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y);
+                player.CharacterTF.eulerAngles = Vector3.up * (Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y);
             }
         }
 
@@ -123,7 +122,9 @@ namespace Visin1_1
             if (axisInput != Vector2.zero)
             {
                 float targetRotation = Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
-                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(player.PlayerInfos.TurnSmoothTime));
+                player.CharacterTF.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(player.CharacterTF.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(player.PlayerInfos.TurnSmoothTime));
+                //Debug.LogFormat(" target : {0}, current : {1}",targetRotation, player.HipTransform.eulerAngles.y);
+                
             }
         }
 
@@ -134,7 +135,7 @@ namespace Visin1_1
         [BindToUpdate("Player's Velocity will always match the Player's Facing Direction")]
         void UpdateVelocityDir_WithFacingDir()
         {
-            velocityNor = transform.forward;
+            velocityNor = player.CharacterTF.forward;
         }
         
         void UpdateVelocityDir_WithInputDir()

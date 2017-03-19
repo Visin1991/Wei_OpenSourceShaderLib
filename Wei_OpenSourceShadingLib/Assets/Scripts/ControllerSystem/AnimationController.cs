@@ -37,7 +37,7 @@ namespace Visin1_1
         {
             player = GetComponent<Player>();
             cameraT = player.CameraT;
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
 
             BindStartDel();
             if (startDel != null) { startDel(); }

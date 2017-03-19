@@ -9,6 +9,7 @@ namespace Visin1_1
         [SerializeField] private PlayerInputs playerInputs;
         [SerializeField] private PlayerInfoProcesser playerInfos;
         [SerializeField] private Transform cameraT;
+        [SerializeField] private Transform characterTF;
 
         public PlayerInfoProcesser PlayerInfos
         {
@@ -17,11 +18,20 @@ namespace Visin1_1
                 return playerInfos;
             }
         }
+
         public Transform CameraT
         {
             get
             {
                 return cameraT;
+            }
+        }
+
+        public Transform CharacterTF
+        {
+            get
+            {
+                return characterTF;
             }
         }
 
