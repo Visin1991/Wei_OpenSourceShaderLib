@@ -18,10 +18,5 @@ namespace Visin1_1
                 animator.SetFloat("moveSpeedPercent", aniMoveSpeedPercent, player.PlayerInfos.SpeedSmoothTime, Time.deltaTime);
             }
         }
-
-
-
-
-
     }
 }

@@ -4,7 +4,7 @@
 		_MainTex("MainTexture", 2D) = "white" {}
 		_Bump("BumpTex", 2D) = "bump" {}
 		_SnowDirection("Snow direction", Vector) = (0, 1, 0)
-		_SnowLevel("Amount of Snow", Range(1, -1)) = 0
+		_SnowLevel("Amount of Snow", Range(-1, 1)) = 0
 	}
 
 	SubShader{

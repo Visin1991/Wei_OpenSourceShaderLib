@@ -123,8 +123,7 @@ namespace Visin1_1
             {
                 float targetRotation = Mathf.Atan2(axisInput.x, axisInput.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
                 player.CharacterTF.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(player.CharacterTF.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(player.PlayerInfos.TurnSmoothTime));
-                //Debug.LogFormat(" target : {0}, current : {1}",targetRotation, player.HipTransform.eulerAngles.y);
-                
+                //Debug.LogFormat(" target : {0}, current : {1}",targetRotation, player.HipTransform.eulerAngles.y);       
             }
         }
 
