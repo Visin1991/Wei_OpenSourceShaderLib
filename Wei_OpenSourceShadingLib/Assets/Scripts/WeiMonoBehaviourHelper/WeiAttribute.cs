@@ -28,7 +28,16 @@
         {
             _description = "Haha Suck";
         }
-    }    
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class ASMCallback : System.Attribute
+    {
+        public ASMCallback()
+        {
+
+        }
+    }
 }
 
 /// Attribute

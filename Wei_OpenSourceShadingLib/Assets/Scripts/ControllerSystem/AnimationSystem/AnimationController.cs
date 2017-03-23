@@ -5,6 +5,12 @@ using System.Reflection;
 
 namespace Visin1_1
 {
+    /// <summary>
+    /// - Update is only called when something in the scene changed.
+    /// - OnGUI is called when the Game View recieves an Event.
+    /// - OnRenderObject and the other rendering callback functions are called on every repaint of the Scene View or Game View.
+    /// </summary>
+    [ExecuteInEditMode]
     [RequireComponent(typeof(Player))]
     public partial class AnimationController : MonoBehaviour
     {
@@ -117,5 +123,7 @@ namespace Visin1_1
         {
             Debug.Log("WTF Are you doing? ");
         }
+
+
     }
 }

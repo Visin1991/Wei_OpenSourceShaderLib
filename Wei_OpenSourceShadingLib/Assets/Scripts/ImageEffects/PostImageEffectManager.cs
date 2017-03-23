@@ -6,7 +6,6 @@ public class PostImageEffectManager : MonoBehaviour {
 
     ImageExtrutionScratch imageExtrution;
     PostOutLineEffect outlineEffect;
-    int convertUVY = 0;
 
     // Use this for initialization
     void Start () {

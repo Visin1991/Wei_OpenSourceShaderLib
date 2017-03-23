@@ -6,7 +6,7 @@ public class ImageExtrutionScratch : MonoBehaviour {
 
     public Shader shader;
     Material mat;
-    RenderTexture renderTex;
+
     private int convertUVY = 0;
 
     public Texture2D headTexture;
@@ -34,7 +34,6 @@ public class ImageExtrutionScratch : MonoBehaviour {
         mat.SetTexture("_HeatTex", headTexture);
         mat.SetTexture("_ScratchEffectTex", ScratchEffectTex);
         mat.SetInt("convertUVY", convertUVY);
-        SetRenderTexture(Camera.main.pixelWidth, Camera.main.pixelHeight);
 	}
 	
 	// Update is called once per frame
@@ -72,6 +71,12 @@ public class ImageExtrutionScratch : MonoBehaviour {
         Graphics.Blit(source, destination, mat);
     }
 
+    /// <summary>
+    ///     When this script is disable. We set up the value of convertUVY
+    /// So when this script is enable, Start function will get call then the value of convertUVY
+    /// will be set.
+    /// </summary>
+    /// <param name="statu"></param>
     public void ConvertUVY(int statu)
     {
         convertUVY = statu;
@@ -79,12 +84,5 @@ public class ImageExtrutionScratch : MonoBehaviour {
         {
             mat.SetInt("convertUVY", convertUVY);
         }
-    }
-
-    void SetRenderTexture(int w, int h)
-    {
-        renderTex = new RenderTexture(w, h, 0, RenderTextureFormat.R8);
-        //把这个texture buffer 储存到 GPU 内存中
-        renderTex.Create();
     }
 }

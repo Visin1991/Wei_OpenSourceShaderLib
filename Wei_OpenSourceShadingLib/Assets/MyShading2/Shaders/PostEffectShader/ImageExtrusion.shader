@@ -70,6 +70,7 @@ SubShader
 				//get animated uv position based on _Time
 				float2 distuv = float2(i.uv.x + _Time.x * _WaveSpeed, i.uv.y + _Time.x * _WaveSpeed);
 				//get red color and green color based on the animated uv
+				//Scroll uv right down is like scroll the texture left up
 				float2 disp = tex2D(_HeatTex, distuv).rg;
 
 				//scale the range of disp form (0,1) to (0,2). and then move down the value to (-1,1) * _Magnitude;

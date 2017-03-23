@@ -16,6 +16,11 @@ namespace Visin1_1
             {
                 aniMoveSpeedPercent = ((player.PlayerInfos.IsRuning) ? 1 : 0.5f) * player.PlayerInfos.AxisInput.magnitude;
                 animator.SetFloat("moveSpeedPercent", aniMoveSpeedPercent, player.PlayerInfos.SpeedSmoothTime, Time.deltaTime);
+
+                if (player.PlayerInfos.Puhching)
+                {
+                    animator.SetBool("Attack",true);
+                }
             }
         }
     }

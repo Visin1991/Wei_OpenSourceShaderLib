@@ -70,7 +70,7 @@ namespace Visin1_1
         [SerializeField] private float moveSpeed = 5;
         [SerializeField] private float runSpeed = 10;
         [SerializeField] private bool isRuning = false;
-        [SerializeField] private bool Puhching = false;
+        [SerializeField] private bool puhching = false;
         [SerializeField] private Vector2 axisInput = Vector2.zero;
         [SerializeField] private float turnSmoothTime = 0.2f;
 
@@ -106,11 +106,11 @@ namespace Visin1_1
             }
         }
 
-        public bool Puhching1
+        public bool Puhching
         {
             get
             {
-                return Puhching;
+                return puhching;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Visin1_1
         public void ProcessInputInfo(PlayerInputs inputsInfo)
         {
             isRuning = inputsInfo.RHold;
-            Puhching = inputsInfo.XDown;
+            puhching = inputsInfo.XDown;
             axisInput = inputsInfo.AxisInput;
         }
     }
