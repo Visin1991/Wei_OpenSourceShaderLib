@@ -25,7 +25,7 @@ public class PostOutLineEffect : MonoBehaviour
     Material post_Mat;
     RenderTexture tempRT;
 
-
+    bool onlyPlayer = false;
 
     private void Start()
     {
@@ -43,7 +43,10 @@ public class PostOutLineEffect : MonoBehaviour
         tempCam.backgroundColor = Color.black;
 
         //选定特定的 Layer 去Render
-        tempCam.cullingMask = 1 << LayerMask.NameToLayer("Outline"); //把需要 增加Outline 的物体的 Layer 设置成 Outline 
+    
+       
+        tempCam.cullingMask = 1 << LayerMask.NameToLayer("Outline");
+        
 
         if (source.width != tempRT.width || source.height != tempRT.height)
         {

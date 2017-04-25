@@ -31,9 +31,59 @@
     }
 
     [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class ASMCallback : System.Attribute
+    public class AMBCallback : System.Attribute
     {
-        public ASMCallback()
+        public AMBCallback()
+        {
+
+        }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class AMBWPCallback : System.Attribute
+    {
+        public string _discription;
+        public AMBWPCallback()
+        {
+
+        }
+        public AMBWPCallback(string discription)
+        {
+            _discription = discription;
+        }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class AMBCallBackB : System.Attribute
+    {
+        public AMBCallBackB()
+        {
+
+        }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class AMBCallBackV3 : System.Attribute
+    {
+        public AMBCallBackV3()
+        {
+
+        }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class AMBCallBackI : System.Attribute
+    {
+        public AMBCallBackI()
+        {
+
+        }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class AMBCallBackF : System.Attribute
+    {
+        public AMBCallBackF()
         {
 
         }
