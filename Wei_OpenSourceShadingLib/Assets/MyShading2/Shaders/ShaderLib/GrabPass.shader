@@ -1,4 +1,6 @@
-﻿Shader "ShaderLib/GrabPass" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ShaderLib/GrabPass" {
 	Properties {
 		_ZoomVal("Zoom value", Range(0, 20)) = 0
 	}
@@ -21,7 +23,7 @@
 
 			v2f vert(appdata_base v) {
 				v2f o;
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 				o.grabPos = ComputeGrabScreenPos(o.pos + half4(0, 0, 0, _ZoomVal));
 				return o;
 			}

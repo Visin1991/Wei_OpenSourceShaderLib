@@ -1,4 +1,6 @@
-﻿Shader "FOB/ImageExtusion"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "FOB/ImageExtusion"
 {
 	Properties
 	{
@@ -41,7 +43,7 @@ SubShader
 		v2f vert(appdata v)
 		{
 			v2f o;
-			o.vertex = mul(UNITY_MATRIX_MVP, v.vertex); //convert the local position to MVP position
+			o.vertex = UnityObjectToClipPos(v.vertex); //convert the local position to MVP position
 			o.uv = v.uv;
 			if (convertUVY) o.uv.y = 1 - o.uv.y;
 			return o;

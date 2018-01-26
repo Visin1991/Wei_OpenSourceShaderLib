@@ -1,4 +1,6 @@
-﻿//This shader goes on the objects themselves. It just draws the object as white, and has the "Outline" layer.
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+//This shader goes on the objects themselves. It just draws the object as white, and has the "Outline" layer.
 Shader "ShaderLib/PostEffect/DrawFlatShap" {
 	SubShader{
 		ZWrite Off
@@ -19,7 +21,7 @@ Shader "ShaderLib/PostEffect/DrawFlatShap" {
 			vtf VShader(vtf i)
 			{
 				vtf o;
-				o.pos = mul(UNITY_MATRIX_MVP, i.pos);
+				o.pos = UnityObjectToClipPos(i.pos);
 				return o;
 			}
 

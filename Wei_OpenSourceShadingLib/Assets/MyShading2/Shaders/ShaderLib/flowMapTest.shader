@@ -1,4 +1,6 @@
-﻿Shader "ShaderLib/flowMapTest" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ShaderLib/flowMapTest" {
 	Properties{
 		_MainTex("Base (RGB)", 2D) = "white" {}
 		_FlowMap("Flow Map", 2D) = "grey" {}
@@ -30,7 +32,7 @@
 
 			v2f vert(appdata_base IN) {
 				v2f o;
-				o.pos = mul(UNITY_MATRIX_MVP, IN.vertex);
+				o.pos = UnityObjectToClipPos(IN.vertex);
 				o.uv = TRANSFORM_TEX(IN.texcoord, _MainTex); //detail see Pixelation shader
 				return o;
 			}

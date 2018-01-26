@@ -1,4 +1,6 @@
-﻿Shader "ShaderLib/WaterDistortion" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ShaderLib/WaterDistortion" {
 Properties{
 	_MainTex("Main texture", 2D) = "white" {}
 	_NoiseTex("Noise texture", 2D) = "grey" {}
@@ -16,6 +18,7 @@ SubShader{
 		#pragma vertex vert
 		#pragma fragment frag
 		#include "UnityCG.cginc"
+		
 
 		sampler2D _MainTex;
 		sampler2D _NoiseTex;
@@ -32,7 +35,7 @@ SubShader{
 
 		v2f vert(appdata_base v) {
 			v2f o;
-			o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+			o.pos = UnityObjectToClipPos(v.vertex);
 			o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
 			return o;
 		}

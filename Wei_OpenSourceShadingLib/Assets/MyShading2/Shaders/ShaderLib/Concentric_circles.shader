@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "ShaderLib/Concentric_circles" {
 	Properties{
@@ -34,7 +36,7 @@ Shader "ShaderLib/Concentric_circles" {
 
 			fragmentInput vert(vertexInput i) {
 				fragmentInput o;
-				o.position = mul(UNITY_MATRIX_MVP, i.vertex);
+				o.position = UnityObjectToClipPos(i.vertex);
 				o.texcoord0 = i.texcoord0;
 				return o;
 			}

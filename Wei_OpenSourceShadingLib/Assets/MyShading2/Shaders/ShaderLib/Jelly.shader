@@ -1,4 +1,6 @@
-﻿Shader "ShaderLib/Vertex/Jelly" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ShaderLib/Vertex/Jelly" {
 	Properties{
 		_MainTex("Base (RGB)", 2D) = "white" {}
 		_TintColor("Tint Color",Color) = (0.7,0.1,0.1,1)
@@ -30,7 +32,7 @@
 				//Extrude the Vertex before we convert the local pos to MVP space
 				v.vertex.xyz += sin(_Time.w) * v.normal * _Exturde;
 
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 				o.uv = v.texcoord;
 				return o;
 			}

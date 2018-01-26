@@ -1,4 +1,6 @@
-﻿Shader "ShaderLib/Pixelation" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ShaderLib/Pixelation" {
 	Properties {
 		_MainTex("Base (RGB)", 2D) = "white" {}
 		_PixelNumberX("Pixel number along X", Range(10,500)) = 500
@@ -32,7 +34,7 @@
 
 			v2f vert(appdata_base v) {
 				v2f o;
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex); //get the vertexMVP
+				o.pos = UnityObjectToClipPos(v.vertex); //get the vertexMVP
 				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
 				return o;
 			}
